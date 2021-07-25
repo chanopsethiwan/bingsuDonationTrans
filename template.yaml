@@ -12,11 +12,11 @@ Globals:
     Runtime: python3.8
 
 Resources:
-  TestFunction:
+  AddDonationTransFunction:
     Type: AWS::Serverless::Function 
     Properties:
-      CodeUri: hello_world/
-      Handler: app.lambda_handler
+      CodeUri: bingsuDonationTrans/
+      Handler: app.add_donation_trans
       
   DonationTransTable:
     Type: AWS::DynamoDB::Table
@@ -32,9 +32,9 @@ Resources:
       
 
 Outputs:
-  TestFunction:
+  AddDonationTransFunction:
     Description: "Hello World Lambda Function ARN"
-    Value: !GetAtt TestFunction.Arn
-  TestFunctionIamRole:
+    Value: !GetAtt AddDonationTransFunction.Arn
+  AddDonationTransFunctionIamRole:
     Description: "Implicit IAM Role created for Hello World function"
-    Value: !GetAtt TestFunctionRole.Arn
+    Value: !GetAtt AddDonationTransFunctionRole.Arn
