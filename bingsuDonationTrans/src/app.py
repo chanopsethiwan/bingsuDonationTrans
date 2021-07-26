@@ -34,5 +34,15 @@ def add_donation_trans(event, context):
     return {'status': 200}
 
 def get_total_sum(event, context):
-    item = event['arguments']
-    return 'Hello World'
+    iterator = PynamoBingsuTotalSum.query("0")
+    total_sum_list = list(iterator)
+    lst = []
+    if len(total_sum_list) > 0:
+        for i in total_sum_list:
+            lst.append(i.returnJson())
+    else:
+        return {'status': 400}
+    total_sum_item = lst[0]
+    return {'status': 200,
+            'total_amount_tree': total_sum_item['total_amount_tree'],
+            'total_co2_offset_amount': total_sum_item['total_co2_offset_amount']}

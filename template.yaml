@@ -21,6 +21,12 @@ Resources:
     Properties:
       CodeUri: bingsuDonationTrans/
       Handler: app.add_donation_trans
+    
+  GetTotalSumTransFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: bingsuDonationTrans/
+      Handler: app.get_total_sum
       
   DonationTransTable:
     Type: AWS::DynamoDB::Table

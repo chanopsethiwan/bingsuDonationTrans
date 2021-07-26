@@ -1,1 +1,1 @@
-from src.app import add_donation_trans
+from src.app import add_donation_trans, get_total_sum
