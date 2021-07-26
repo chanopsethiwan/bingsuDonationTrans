@@ -5,13 +5,14 @@ from .bingsuDonationTrans import PynamoBingsuDonationTrans, PynamoBingsuTotalSum
 
 def add_donation_trans(event, context):
     item = event['arguments']
+    amount_baht = item['amount_baht']
     amount_tree = amount_baht/46
     co2_offset_amount = amount_tree*21 #each tree absorb around 21 kg of co2 per year
     donation_trans_item = PynamoBingsuDonationTrans(
         transaction_id = str(uuid4()),
         user_id = item.get('user_id', 'anonymous'),
         date_time = str(datetime.utcnow()).replace(' ','T')[0:19]+'+00:00',
-        amount_baht = item['amount_baht'],
+        amount_baht = amount_baht,
         amount_tree = amount_tree,
         co2_offset_amount = co2_offset_amount
     )
