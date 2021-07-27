@@ -1,7 +1,7 @@
 import json
 from uuid import uuid4
-from datetime import datetime
-from .bingsuDonationTrans import PynamoBingsuDonationTrans, PynamoBingsuTotalSum, PynamoBingsuUser, PynamoBingsuTotalLastWeek
+from datetime import datetime, timedelta
+from .bingsuDonationTrans import PynamoBingsuDonationTrans, PynamoBingsuTotalSum, PynamoBingsuUser, PynamoBingsuTotalCo2
 
 def add_donation_trans(event, context):
     item = event['arguments']
@@ -82,18 +82,26 @@ def get_total_sum(event, context):
             'total_co2_offset_amount': total_sum_item['total_co2_offset_amount']}
 
 def get_total_co2_amount_by_company(event, company):
-    item = event['arguments']
-    iterator = PynamoBingsuTotalLastWeek.query(item['company'])
-    total_co2_amount_list = list(iterator)
-    lst = []
-    if len(total_co2_amount_list) > 0:
-        for i in total_co2_amount_list:
-            lst.append(i.returnJson())
-    else:
-        return {'status': 400}
+    number_list = [1,2,3,4,5,6,7]
+    date_list = []
+    for n in number_list:
+        date = datetime.utcnow().date() - timedelta(days = n)
+        iterator = PynamoBingsuTotalCo2.query(str(date))
+        total_co2_amount_list = list(iterator)
+        lst = []
+        if len(total_co2_amount_list) > 0:
+            for i in total_co2_amount_list:
+                lst.append(i.returnJson())
+        else:
+            continue
+        dict_item = lst[0]
+        date_dict = {'day': date.strftime('%A'), 'grab': dict_item.get('grab', 0), 'robinhood': dict_item.get('robinhood', 0), 'foodpanda': dict_item.get('foodpanda', 0)}
+        date_list.append(date_dict)
     return {'status': 200,
-            'data': lst}
+            'data': date_list}
 
-
+def update_total_co2_amount(event, company):
+    item = event['arguments']
+    iterator = PynamoBingsuTotalLastWeek.query
     
     
