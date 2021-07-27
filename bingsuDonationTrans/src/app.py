@@ -103,6 +103,34 @@ def get_total_co2_amount_by_company(event, company):
 
 def update_total_co2_amount(event, company):
     item = event['arguments']
-    iterator = PynamoBingsuTotalLastWeek.query
-    
+    date = item.get('date', str(datetime.utcnow().date()))
+    company = item['company']
+    co2_amount = item['co2_amount']
+    iterator = PynamoBingsuTotalCo2.query(date)
+    date_list = list(iterator)
+    lst = []
+    if len(date_list) > 0:
+        for i in date_list:
+            lst.append(i.returnJson())
+    else:
+        dict_item = {'date': date, 'grab': 0, 'robinhood': 0, 'foodpanda': 0}
+        dict_item[company] = co2_amount
+        date_item = PynamoBingsuTotalCo2(
+            date = dict_item['date'],
+            grab = dict_item['grab'],
+            robinhood = dict_item['robinhood'],
+            foodpanda = dict_item['foodpanda']
+        )
+        date_item.save()
+        return {'status': 200}
+    dict_item = lst[0]
+    dict_item[company] = dict_item[company] + co2_amount
+    date_item = PynamoBingsuTotalCo2(
+        date = dict_item['date'],
+        grab = dict_item['grab'],
+        robinhood = dict_item['robinhood'],
+        foodpanda = dict_item['foodpanda']
+    )
+    date_item.save()
+    return {'status': 200}
     
