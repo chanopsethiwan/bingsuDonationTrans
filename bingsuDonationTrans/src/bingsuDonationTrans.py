@@ -53,3 +53,15 @@ class PynamoBingsuUser(Model):
     
     def returnJson(self):
         return vars(self).get('attribute_values')
+    
+class PynamoBingsuTotalLastWeek(Model):
+    ''' database to store user '''
+    class Meta:
+        table_name = os.environ.get('BINGSU_TOTAL_LAST_WEEK_TABLE_NAME')
+        region = 'ap-southeast-1'
+    company = UnicodeAttribute(hash_key = True)
+    day = UnicodeAttribute(range_key = True)
+    total_co2_amount = NumberAttribute()
+    
+    def returnJson(self):
+        return vars(self).get('attribute_values')

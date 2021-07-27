@@ -1,7 +1,7 @@
 import json
 from uuid import uuid4
 from datetime import datetime
-from .bingsuDonationTrans import PynamoBingsuDonationTrans, PynamoBingsuTotalSum, PynamoBingsuUser
+from .bingsuDonationTrans import PynamoBingsuDonationTrans, PynamoBingsuTotalSum, PynamoBingsuUser, PynamoBingsuTotalLastWeek
 
 def add_donation_trans(event, context):
     item = event['arguments']
@@ -80,3 +80,20 @@ def get_total_sum(event, context):
     return {'status': 200,
             'total_amount_tree': total_sum_item['total_amount_tree'],
             'total_co2_offset_amount': total_sum_item['total_co2_offset_amount']}
+
+def get_total_co2_amount_by_company(event, company):
+    item = event['arguments']
+    iterator = PynamoBingsuTotalLastWeek.query(item['company'])
+    total_co2_amount_list = list(iterator)
+    lst = []
+    if len(total_co2_amount_list) > 0:
+        for i in total_co2_amount_list:
+            lst.append(i.returnJson())
+    else:
+        return {'status': 400}
+    return {'status': 200,
+            'data': lst}
+
+
+    
+    

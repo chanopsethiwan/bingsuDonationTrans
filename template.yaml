@@ -14,6 +14,7 @@ Globals:
       Variables:
         BINGSU_DONATION_TRANS_TABLE_NAME: !Ref DonationTransTable
         BINGSU_TOTAL_SUM_TABLE_NAME: !Ref TotalSumTable
+        BINGSU_TOTAL_LAST_WEEK_TABLE_NAME: !Ref TotalLastWeekTable
 
 Resources:
   AddDonationTransFunction:
@@ -27,6 +28,14 @@ Resources:
     Properties:
       CodeUri: bingsuDonationTrans/
       Handler: app.get_total_sum
+      
+  GetCo2AmountByCompanyFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: bingsuDonationTrans/
+      Handler: app.get_total_co2_amount_by_company
+      
+  
       
   DonationTransTable:
     Type: AWS::DynamoDB::Table
@@ -51,6 +60,22 @@ Resources:
         - AttributeName: transaction_id
           KeyType: HASH
       TableName: "BingsuTotalSum"
+      
+  TotalLastWeekTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: company
+          AttributeType: S
+        - AttributeName: day
+          AttributeType: S
+      BillingMode: PAY_PER_REQUEST
+      KeySchema:
+        - AttributeName: company
+          KeyType: HASH
+        - AttributeName: day
+          KeyType: RANGE
+      TableName: "BingsuTotalLastWeek"
       
 
 Outputs:

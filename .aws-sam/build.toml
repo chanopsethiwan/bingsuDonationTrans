@@ -6,6 +6,6 @@ codeuri = "/Users/chap/bingsuDonationTrans/bingsuDonationTrans"
 runtime = "python3.8"
 source_md5 = ""
 packagetype = "Zip"
-functions = ["AddDonationTransFunction", "GetTotalSumTransFunction"]
+functions = ["AddDonationTransFunction", "GetTotalSumTransFunction", "GetCo2AmountByCompanyFunction"]
 
 [layer_build_definitions]
