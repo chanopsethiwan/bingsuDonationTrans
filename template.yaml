@@ -35,7 +35,11 @@ Resources:
       CodeUri: bingsuDonationTrans/
       Handler: app.get_total_co2_amount_by_company
       
-  
+  UpdateTotalCo2AmountFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: bingsuDonationTrans/
+      Handler: app.update_total_co2_amount
       
   DonationTransTable:
     Type: AWS::DynamoDB::Table

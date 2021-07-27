@@ -95,8 +95,9 @@ def get_total_co2_amount_by_company(event, company):
         else:
             continue
         dict_item = lst[0]
-        date_dict = {'day': date.strftime('%A'), 'grab': dict_item.get('grab', 0), 'robinhood': dict_item.get('robinhood', 0), 'foodpanda': dict_item.get('foodpanda', 0)}
-        date_list.append(date_dict)
+        dict_item.pop('date')
+        dict_item['day'] = date.strftime('%A')
+        date_list.append(dict_item)
     return {'status': 200,
             'data': date_list}
 
