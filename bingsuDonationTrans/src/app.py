@@ -5,6 +5,7 @@ from .bingsuDonationTrans import PynamoBingsuDonationTrans, PynamoBingsuTotalSum
 
 # todo: add coins to user table, have to add field called coins_amount
 # input: amount_baht, user_id(not needed)
+# author: chappy
 def add_donation_trans(event, context):
     item = event['arguments']
     user_id = item.get('user_id', None)
@@ -88,6 +89,7 @@ def get_total_sum(event, context):
 
 # input: no input
 # todo: test web front end
+# author: paopao
 def get_total_co2_amount_by_company(event, company):
     number_list = [1,2,3,4,5,6,7]
     date_list = []
@@ -110,6 +112,7 @@ def get_total_co2_amount_by_company(event, company):
 
 # input: date (not require), company, CO2_amount
 # todo: connect to clientappconnection
+# author: paopao
 def update_total_co2_amount(event, company):
     item = event['arguments']
     date = item.get('date', str(datetime.utcnow().date()))
