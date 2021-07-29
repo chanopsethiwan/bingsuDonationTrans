@@ -12,13 +12,15 @@ def add_donation_trans(event, context):
     amount_baht = item['amount_baht']
     amount_tree = amount_baht/46
     co2_offset_amount = amount_tree*21 #each tree absorb around 21 kg of co2 per year
+    coins_amount = int(amount_baht/4)
     donation_trans_item = PynamoBingsuDonationTrans(
         transaction_id = str(uuid4()),
         user_id = item.get('user_id', 'anonymous'),
         date_time = str(datetime.utcnow()).replace(' ','T')[0:19]+'+00:00',
         amount_baht = amount_baht,
         amount_tree = amount_tree,
-        co2_offset_amount = co2_offset_amount
+        co2_offset_amount = co2_offset_amount,
+        coins_amount = coins_amount
     )
     donation_trans_item.save()
 
@@ -52,6 +54,7 @@ def add_donation_trans(event, context):
         current_dict = lst[0]
         current_dict['total_amount_tree'] = current_dict['total_amount_tree'] + amount_tree
         current_dict['total_co2_offset_amount'] = current_dict['total_co2_offset_amount'] + co2_offset_amount
+        current_dict['coins'] = current_dict['coins'] + coins_amount
         user_item = PynamoBingsuUser(
             user_id = current_dict['user_id'],
             username = current_dict['username'],

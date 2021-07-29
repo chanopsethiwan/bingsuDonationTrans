@@ -14,6 +14,7 @@ class PynamoBingsuDonationTrans(Model):
     amount_baht = NumberAttribute()
     amount_tree = NumberAttribute()
     co2_offset_amount = NumberAttribute()
+    coins_amount = NumberAttribute()
     
     def returnJson(self):
         return vars(self).get('attribute_values')
