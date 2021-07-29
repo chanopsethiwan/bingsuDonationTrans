@@ -108,6 +108,8 @@ def get_total_co2_amount_by_company(event, company):
     return {'status': 200,
             'data': date_list}
 
+# input: date (not require), company, CO2_amount
+# todo: connect to clientappconnection
 def update_total_co2_amount(event, company):
     item = event['arguments']
     date = item.get('date', str(datetime.utcnow().date()))
