@@ -3,6 +3,8 @@ from uuid import uuid4
 from datetime import datetime, timedelta
 from .bingsuDonationTrans import PynamoBingsuDonationTrans, PynamoBingsuTotalSum, PynamoBingsuUser, PynamoBingsuTotalCo2
 
+# todo: add coins to user table, have to add field called coins_amount
+# input: amount_baht, user_id(not needed)
 def add_donation_trans(event, context):
     item = event['arguments']
     user_id = item.get('user_id', None)
@@ -18,6 +20,7 @@ def add_donation_trans(event, context):
         co2_offset_amount = co2_offset_amount
     )
     donation_trans_item.save()
+
     iterator = PynamoBingsuTotalSum.query("0")
     total_sum_list = list(iterator)
     lst = []
@@ -35,7 +38,8 @@ def add_donation_trans(event, context):
         total_co2_offset_amount = total_co2_offset_amount
     )
     total_sum_item_to_update.save()
-    if user_id:
+
+    if user_id or user_id != 'anonymous':
         iterator2 = PynamoBingsuUser.query(user_id)
         user_list = list(iterator2)
         lst = []
@@ -67,6 +71,7 @@ def add_donation_trans(event, context):
         user_item.save()
     return {'status': 200}
 
+# input: no input
 def get_total_sum(event, context):
     iterator = PynamoBingsuTotalSum.query("0")
     total_sum_list = list(iterator)
@@ -81,6 +86,8 @@ def get_total_sum(event, context):
             'total_amount_tree': total_sum_item['total_amount_tree'],
             'total_co2_offset_amount': total_sum_item['total_co2_offset_amount']}
 
+# input: no input
+# todo: test web front end
 def get_total_co2_amount_by_company(event, company):
     number_list = [1,2,3,4,5,6,7]
     date_list = []
