@@ -53,6 +53,8 @@ Resources:
       AttributeDefinitions:
         - AttributeName: transaction_id
           AttributeType: S
+        - AttributeName: user_id
+          AttributeType: S
       BillingMode: PAY_PER_REQUEST
       KeySchema:
         - AttributeName: transaction_id
