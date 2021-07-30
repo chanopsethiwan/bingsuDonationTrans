@@ -3,6 +3,19 @@ from pynamodb.attributes import UnicodeAttribute, NumberAttribute
 from pynamodb.indexes import GlobalSecondaryIndex, AllProjection
 import os
 
+class UserIdIndex(GlobalSecondaryIndex):
+    """
+    This class represents a global secondary index
+    """
+    class Meta:
+        index_name = 'user_id'
+        read_capacity_units = 1
+        write_capacity_units = 1
+        # All attributes are projected
+        projection = AllProjection()
+
+    user_id = UnicodeAttribute(hash_key=True)
+
 class PynamoBingsuDonationTrans(Model):
     ''' database to store user '''
     class Meta:
@@ -15,6 +28,8 @@ class PynamoBingsuDonationTrans(Model):
     amount_tree = NumberAttribute()
     co2_offset_amount = NumberAttribute()
     coins_amount = NumberAttribute()
+    
+    user_id_index = UserIdIndex()
     
     def returnJson(self):
         return vars(self).get('attribute_values')

@@ -79,7 +79,7 @@ def add_donation_trans(event, context):
 def get_donation_trans_by_user_id(event, context):
     item = event['arguments']
     user_id = item['user_id']
-    iterator = PynamoBingsuDonationTrans.query(user_id)
+    iterator = PynamoBingsuDonationTrans.user_id_index.query(user_id)
     user_list = list(iterator)
     lst = []
     if len(user_list) > 0:

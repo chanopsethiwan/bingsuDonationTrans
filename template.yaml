@@ -57,6 +57,13 @@ Resources:
       KeySchema:
         - AttributeName: transaction_id
           KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: user_id
+          KeySchema:
+            - AttributeName: user_id
+              KeyType: HASH
+          Projection: 
+            ProjectionType: ALL
       TableName: "BingsuDonationTrans"
       
   TotalSumTable:
