@@ -1,1 +1,1 @@
-from src.app import add_donation_trans, get_total_sum, get_total_co2_amount_by_company, update_total_co2_amount
+from src.app import add_donation_trans, get_total_sum, get_total_co2_amount_by_company, update_total_co2_amount, get_donation_trans_by_user_id

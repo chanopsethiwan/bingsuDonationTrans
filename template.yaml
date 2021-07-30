@@ -40,6 +40,12 @@ Resources:
     Properties:
       CodeUri: bingsuDonationTrans/
       Handler: app.update_total_co2_amount
+
+  GetDonationTransByUserId:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: bingsuDonationTrans/
+      Handler: app.get_donation_trans_by_user_id
       
   DonationTransTable:
     Type: AWS::DynamoDB::Table
