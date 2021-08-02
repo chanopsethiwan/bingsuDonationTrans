@@ -87,7 +87,7 @@ def get_donation_trans_by_user_id(event, context):
             lst.append(user.returnJson())
     else:
         return {'status': 400}
-    return {'status': 200, 'data': lst}
+    return {'status': 200, 'data': lst[0:20]}
 
 
 # input: no input
